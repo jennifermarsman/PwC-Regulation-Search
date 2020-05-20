@@ -1,0 +1,346 @@
+{
+    "name": "pwc-skillset",
+    "description": "Skillset for PwC policy search",
+    "skills": [
+      {
+        "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
+        "name": "PwcRegulationSkill",
+        "description": "This skill calls a binary classification model that identifies regulatory requirements.",
+        "context": "/document",
+        "uri": "TODO",
+        "httpMethod": "POST",
+        "timeout": "PT30S",
+        "degreeOfParallelism": 10,
+        "inputs": [
+          {
+            "name": "text",
+            "source": "/document/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "text",
+            "targetName": "Result"
+          },
+          {
+            "name": "probability",
+            "targetName": "Probability"
+          },
+          {
+            "name": "prediction",
+            "targetName": "Prediction"
+          }
+        ],
+        "httpHeaders": {}
+      },
+      {
+        "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
+        "name": "EntityRecognition",
+        "description": null,
+        "context": "/document/Text",
+        "categories": [
+          "Person",
+          "Quantity",
+          "Organization",
+          "URL",
+          "Email",
+          "Location",
+          "DateTime"
+        ],
+        "defaultLanguageCode": "en",
+        "minimumPrecision": null,
+        "includeTypelessEntities": null,
+        "inputs": [
+          {
+            "name": "text",
+            "source": "/document/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "organizations",
+            "targetName": "organizations"
+          },
+          {
+            "name": "locations",
+            "targetName": "locations"
+          },
+          {
+            "name": "persons",
+            "targetName": "people"
+          },
+          {
+            "name": "entities",
+            "targetName": "entities"
+          }
+        ]
+      },
+      {
+        "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+        "name": "KeyPhraseExtraction",
+        "description": null,
+        "context": "/document/Text",
+        "defaultLanguageCode": "en",
+        "maxKeyPhraseCount": null,
+        "inputs": [
+          {
+            "name": "text",
+            "source": "/document/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "keyPhrases",
+            "targetName": "keyphrases"
+          }
+        ]
+      },
+      {
+        "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+        "name": "FormatAzureBlobProjection",
+        "description": null,
+        "context": "/document",
+        "inputs": [
+          {
+            "name": "ID",
+            "source": "/document/ID"
+          },
+          {
+            "name": "Text",
+            "source": "/document/Text"
+          },
+          {
+            "name": "Cit_ID",
+            "source": "/document/Cit_ID"
+          },
+          {
+            "name": "Regulation",
+            "source": "/document/Regulation"
+          },
+          {
+            "name": "Regulator",
+            "source": "/document/Regulator"
+          },
+          {
+            "name": "Probability",
+            "source": "/document/Probability"
+          },
+          {
+            "name": "Prediction",
+            "source": "/document/Prediction"
+          },
+          {
+            "name": "AzureSearch_DocumentKey",
+            "source": "/document/AzureSearch_DocumentKey"
+          },
+          {
+            "name": "metadata_storage_content_type",
+            "source": "/document/metadata_storage_content_type"
+          },
+          {
+            "name": "metadata_storage_size",
+            "source": "/document/metadata_storage_size"
+          },
+          {
+            "name": "metadata_storage_last_modified",
+            "source": "/document/metadata_storage_last_modified"
+          },
+          {
+            "name": "metadata_storage_content_md5",
+            "source": "/document/metadata_storage_content_md5"
+          },
+          {
+            "name": "metadata_storage_name",
+            "source": "/document/metadata_storage_name"
+          },
+          {
+            "name": "metadata_storage_path",
+            "source": "/document/metadata_storage_path"
+          },
+          {
+            "name": "keyPhrases",
+            "source": "/document/Text/keyphrases/*"
+          },
+          {
+            "name": "Entities",
+            "sourceContext": "/document/Text/entities/*",
+            "inputs": [
+              {
+                "name": "Entity",
+                "source": "/document/Text/entities/*/name"
+              },
+              {
+                "name": "EntityType",
+                "source": "/document/Text/entities/*/type"
+              },
+              {
+                "name": "EntitySubType",
+                "source": "/document/Text/entities/*/subType"
+              },
+              {
+                "name": "Url",
+                "source": "/document/Text/entities/*/wikipediaUrl"
+              }
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "name": "output",
+            "targetName": "objectprojection"
+          }
+        ]
+      },
+      {
+        "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+        "name": "FormatAzureTableProjection",
+        "description": null,
+        "context": "/document",
+        "inputs": [
+          {
+            "name": "ID",
+            "source": "/document/ID"
+          },
+          {
+            "name": "Text",
+            "source": "/document/Text"
+          },
+          {
+            "name": "Cit_ID",
+            "source": "/document/Cit_ID"
+          },
+          {
+            "name": "Regulation",
+            "source": "/document/Regulation"
+          },
+          {
+            "name": "Regulator",
+            "source": "/document/Regulator"
+          },
+          {
+            "name": "Probability",
+            "source": "/document/Probability"
+          },
+          {
+            "name": "Prediction",
+            "source": "/document/Prediction"
+          },
+          {
+            "name": "AzureSearch_DocumentKey",
+            "source": "/document/AzureSearch_DocumentKey"
+          },
+          {
+            "name": "metadata_storage_content_type",
+            "source": "/document/metadata_storage_content_type"
+          },
+          {
+            "name": "metadata_storage_size",
+            "source": "/document/metadata_storage_size"
+          },
+          {
+            "name": "metadata_storage_last_modified",
+            "source": "/document/metadata_storage_last_modified"
+          },
+          {
+            "name": "metadata_storage_content_md5",
+            "source": "/document/metadata_storage_content_md5"
+          },
+          {
+            "name": "metadata_storage_name",
+            "source": "/document/metadata_storage_name"
+          },
+          {
+            "name": "metadata_storage_path",
+            "source": "/document/metadata_storage_path"
+          },
+          {
+            "name": "keyPhrases",
+            "source": "/document/Text/keyphrases/*"
+          },
+          {
+            "name": "Entities",
+            "sourceContext": "/document/Text/entities/*",
+            "inputs": [
+              {
+                "name": "Entity",
+                "source": "/document/Text/entities/*/name"
+              },
+              {
+                "name": "EntityType",
+                "source": "/document/Text/entities/*/type"
+              },
+              {
+                "name": "EntitySubType",
+                "source": "/document/Text/entities/*/subType"
+              },
+              {
+                "name": "Url",
+                "source": "/document/Text/entities/*/wikipediaUrl"
+              }
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "name": "output",
+            "targetName": "tableprojection"
+          }
+        ]
+      }
+    ],
+    "cognitiveServices": {
+      "@odata.type": "#Microsoft.Azure.Search.CognitiveServicesByKey",
+      "description": "Cognitive Services key",
+      "key": "TODO"
+    },
+    "knowledgeStore": {
+      "storageConnectionString": "DefaultEndpointsProtocol=https;AccountName=TODO;AccountKey=TODO;EndpointSuffix=core.windows.net",
+      "projections": [
+        {
+          "tables": [
+            {
+              "tableName": "pwcSkillsetDocument",
+              "referenceKeyName": null,
+              "generatedKeyName": "Documentid",
+              "source": "/document/tableprojection",
+              "sourceContext": null,
+              "inputs": []
+            },
+            {
+              "tableName": "pwcSkillsetKeyPhrases",
+              "referenceKeyName": null,
+              "generatedKeyName": "KeyPhrasesid",
+              "source": null,
+              "sourceContext": "/document/tableprojection/keyPhrases/*",
+              "inputs": [
+                {
+                  "name": "keyphrases",
+                  "source": "/document/tableprojection/keyPhrases/*",
+                  "sourceContext": null,
+                  "inputs": []
+                }
+              ]
+            },
+            {
+              "tableName": "pwcSkillsetEntities",
+              "referenceKeyName": null,
+              "generatedKeyName": "Entitiesid",
+              "source": "/document/tableprojection/Entities/*",
+              "sourceContext": null,
+              "inputs": []
+            }
+          ],
+          "objects": [
+            {
+              "storageContainer": "knowledge-store",
+              "referenceKeyName": null,
+              "generatedKeyName": null,
+              "source": "/document/objectprojection",
+              "sourceContext": null,
+              "inputs": []
+            }
+          ]
+        }
+      ]
+    }
+  }

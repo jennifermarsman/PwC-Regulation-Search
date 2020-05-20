@@ -1,0 +1,58 @@
+{
+    "name": "pwc-indexer",
+    "description": "",
+    "dataSourceName": "pwc-ds",
+    "skillsetName": "pwc-skillset",
+    "targetIndexName": "pwc-index",
+    "disabled": null,
+    "schedule": null,
+    "parameters": {
+      "batchSize": null,
+      "maxFailedItems": 0,
+      "maxFailedItemsPerBatch": 0,
+      "base64EncodeKeys": null,
+      "configuration": {
+        "dataToExtract": "contentAndMetadata",
+        "parsingMode": "delimitedText",
+        "firstLineContainsHeaders": true,
+        "delimitedTextDelimiter": ",",
+        "delimitedTextHeaders": ""
+      }
+    },
+    "fieldMappings": [
+      {
+        "sourceFieldName": "AzureSearch_DocumentKey",
+        "targetFieldName": "AzureSearch_DocumentKey",
+        "mappingFunction": {
+          "name": "base64Encode"
+        }
+      }
+    ],
+    "outputFieldMappings": [
+      {
+        "sourceFieldName": "/document/Probability",
+        "targetFieldName": "Probability"
+      },
+      {
+        "sourceFieldName": "/document/Prediction",
+        "targetFieldName": "Prediction"
+      },
+      {
+        "sourceFieldName": "/document/Text/organizations",
+        "targetFieldName": "organizations"
+      },
+      {
+        "sourceFieldName": "/document/Text/locations",
+        "targetFieldName": "locations"
+      },
+      {
+        "sourceFieldName": "/document/Text/people",
+        "targetFieldName": "people"
+      },
+      {
+        "sourceFieldName": "/document/Text/keyphrases",
+        "targetFieldName": "keyphrases"
+      }
+    ],
+    "cache": null
+  }
