@@ -10,7 +10,7 @@ Cognitive Search allows developers to compose a set of skills (both prebuilt fun
 
 For more information, see <https://aka.ms/PwCCognitiveSearchStory>.  
 
-![Architecture Diagram](images\CC0946_MS_PwC_ArchitectureDiagram_v2.02_051120.png)
+![Architecture Diagram](images/CC0946_MS_PwC_ArchitectureDiagram_v2.02_051120.png)
 
 ## Setup
 
