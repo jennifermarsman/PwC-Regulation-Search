@@ -16,7 +16,7 @@ For more information, see <https://aka.ms/PwCCognitiveSearchStory>.
 
 First, you will need an Azure account.  If you don't already have one, you can start a free trial of Azure [here](https://azure.microsoft.com/free/).  
 
-Secondly, this implementation uses the PwC machine learning model to identify actionable regulations in documents.  If you are interested in leveraging this model, please contact neelam.sharma@pwc.com and todd.morrill@pwc.com.  Their model is hosted in an Azure Function and can be called as a custom skill.  
+Secondly, this implementation uses the PwC machine learning model to identify actionable regulations in documents.  If you are interested in leveraging this model, please contact us_regtech@pwc.com.  Their model is hosted in an Azure Function and can be called as a custom skill.  
 
 Now, on the Azure portal, you can create a new Azure storage account at <https://portal.azure.com/#create/Microsoft.StorageAccount>. Remember the subscription, resource group, and location that you use, and use the same ones for the Azure Cognitive Search service and Cognitive Services key when you create them.  Choose your own unique storage account name (it must be lowercase letters and numbers only).  You can change the replication to LRS.  You can use the defaults for everything else, and then create the storage.  Once it has been deployed, update the blob_connection_string variable in the SetupAzureCognitiveSearchService.ipynb notebook.  (This setup notebook will create a container in your blob storage called "pwc" and upload sample data there, but don't run it yet.)  Finally, create a container in your blob storage account called "knowledgeStore".  After you have created it, note down the connection string to that container for later.  
 
