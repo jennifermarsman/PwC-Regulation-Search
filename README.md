@@ -12,6 +12,12 @@ For more information, see <https://aka.ms/PwCCognitiveSearchStory>.
 
 ![Architecture Diagram](images/CC0946_MS_PwC_ArchitectureDiagram_v2.02_051120.png)
 
+## Demo
+
+You can demonstrate the capability of Microsoft's Cognitive Search and PwC's regulatory model using this [demo script](DemoScript.md).  This demo script uses the Power BI instance at <https://aka.ms/PwCCognitiveSearchDemo>.  You can also set up this Cognitive Search pipeline in your own Azure subscription using the Setup instructions below, but this is not necessary to run the demo script.  
+
+[Demo script walkthrough](DemoScript.md)
+
 ## Setup
 
 First, you will need an Azure account.  If you don't already have one, you can start a free trial of Azure [here](https://azure.microsoft.com/free/).  
