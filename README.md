@@ -1,12 +1,14 @@
-# PwC-Regulation-Search
+# PwC Regulation Search
 
-Azure Cognitive Search service which leverages machine learning models from PwC to identify actionable regulations in documents
+Azure Cognitive Search service which leverages a machine learning model from PwC (PricewaterhouseCoopers) to identify actionable regulations in documents
 
 ## Overview
 
-PwC is a network of business consultancy and accounting firms in 150 countries, making it the largest professional services organization in the world, according to the Reference for Business.  Regulated companies like PwC's Fortune 100 clients can invest a lot of time and effort to identify and understand the regulations that they must meet.  To help its clients comply more easily, PwC built a Regulatory Obligation Identifier (ROI) classifier, which identifies if given text contains an actionable regulation.  
+PwC is a network of business consultancy and accounting firms in 150 countries, making it the largest professional services organization in the world, according to the Reference for Business.  Regulated companies like PwC's Fortune 100 clients can invest a lot of time and effort to identify and understand the regulations that they must meet.  To help its clients comply more easily, PwC built a Regulatory Obligation Identifier (ROI) classifier, which identifies if given text contains an actionable regulation.  For example, a statement like "Written applications. A creditor shall take written applications for the dwelling-related types of credit covered by § 1002.13(a)" is actionable because it specifies a concrete action that must be done, and a statement like "For purposes of this part, the following definitions apply: Bureau means the Bureau of Consumer Financial Protection" is not actionable because it is simply defining a term in the document, rather than imparting work that must be completed.  
 
 Cognitive Search allows developers to compose a set of skills (both prebuilt functionality that can be added with a simple checkbox, like language detection, translation, sentiment analysis, key phrase extraction, entity extraction, OCR, image captioning, etc. as well as extensibility for your own custom machine learning skills like PwC's ROI model).  So an end user could use these together beautifully by simply dumping regulatory documents or pdfs in Azure blob storage, then Cognitive Search could perform language detection and translate into English, run through PwC's ROI model to find the actionable regulations, as well as anything else they might want to do (extract entities like organization names, locations, etc.) and have all of this extra intelligence from their documents stored and queryable.  
+
+The Cognitive Search solution consists of a data source which pulls text from an Excel spreadsheet that was provided by PwC and hosted in Azure blob storage.  (For future work, we are asking PwC to provide actual pdf/documents in raw form for processing by Cognitive Search.)  The data is run through a skillset which performs key phrase extraction, entity recognition, 2 shapers (to format data for blob and table knowledge stores), and a custom skill which calls PwC's machine learning model to determine if the given text is actionable.  The enriched data is projected to blob and table knowledge stores as well as stored in the search index.  Finally, for visualization of this work, we made small modifications to the [PowerBI template](https://aka.ms/cogsearchpbi) that is provided by Cognitive Search and published it to <https://aka.ms/PwCCognitiveSearchDemo>, along with a [demo script](DemoScript.md) that can be used to walk through the scenario.  
 
 For more information, see <https://aka.ms/PwCCognitiveSearchStory>.  
 
@@ -33,3 +35,9 @@ Before running the notebook, you will also need to update the "TODO" placeholder
 3. **Knowledge Store connection string:** use the value that you noted down earlier of the connection string to the knowledgeStore container in your Azure blob storage.  It should be of the format "DefaultEndpointsProtocol=https;AccountName=YourValueHere;AccountKey=YourValueHere;EndpointSuffix=core.windows.net".  
 
 Finally, you can open the Jupyter notebook SetupAzureCognitiveSearchService.ipynb, follow the instructions to modify the values in the first code cell, and then run all of the cells.  This notebook will walk you through [creating an Azure Cognitive Search service](https://portal.azure.com/#create/Microsoft.Search) and calling REST endpoints on the search service to set up the data source, index, skillset, and indexer.
+
+## Links
+
++ Customer story and video: <https://aka.ms/PwCCognitiveSearchStory>
++ Code assets: <https://aka.ms/PwCCognitiveSearchCode>
++ Demo of Power BI interface: <https://aka.ms/PwCCognitiveSearchDemo>

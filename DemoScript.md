@@ -8,7 +8,7 @@ In this instance, we have modified this PowerBI template to show some of the fun
 
 Regulatory documents are hard to read, can change frequently, and there are penalties for businesses who don't comply with regulations.  For global companies who need to comply with regulations from governments all over the world, keeping up can be a challenge.  
 
-For more information, see the customer story and video at <https://aka.ms/PwCCognitiveSearchStory>.  
+For more information, see the customer story and video at <https://aka.ms/PwCCognitiveSearchStory>.  When demoing this solution, you are welcome to play the video and use the [PwC summary slide](https://ms-f7-sites-01-cdn.azureedge.net/docs/stories/811347-pwc-partner-professional-services-azure/resources/485ce088-70b2-440b-932d-9c9d11c4871d/pwc_summary_slide.pptx).  
 
 ## Demo Script
 
